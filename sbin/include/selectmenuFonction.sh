@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#fonction de selection
+#selection function
 function choose_from_menu() {
     local prompt="$1" outvar="$2"
     shift
@@ -15,8 +15,8 @@ function choose_from_menu() {
         for o in "${options[@]}"
         do
             if [ "$index" == "$cur" ]
-            then echo -e " >\e[7m$o\e[0m" # mark & highlight the current option
-            else echo "  $o"
+            then echo -e " =>\e[7m$o\e[0m" # mark & highlight the current option
+            else echo "   $o"
             fi
             index=$(( $index + 1 ))
         done
@@ -35,11 +35,3 @@ function choose_from_menu() {
     # export the selection to the requested output variable
     printf -v $outvar "${options[$cur]}"
 }
-# Oui ou non 
-YesOrNo=(
-    "Oui"
-    "Non"
-    )
-
-# racine du projet
-root="../"
