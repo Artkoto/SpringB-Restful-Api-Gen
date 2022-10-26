@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # app type
-packaging=(
+packagings=(
     "jar"
     "war"
     )
@@ -15,30 +15,35 @@ packaging=(
 function projectCraetion(){
     local scriptsFileDir="$1" projectRoot="$2"
     local appName="" groupId="" artifactId="" package="" appType=""
+    local appTemplate="" templateDir=""
 
     source "${scriptsFileDir}/include/gen-repositories.sh"
     source "${scriptsFileDir}/include/gen-name.sh"
 
-    # Etape 1 : general information about the application
-    #Etape 1.1 : App name
+    # Step 1 : general information about the application
+    #Step 1.1 : App name
     echo "idicate the name of your application"
     nameGen appName
-    # Etape 1.2 : groupId
+    # Step 1.2 : groupId
     echo "indicate the grouped. example: fr/company/team.."
     directoryGen groupId
-    # Etape 1.3 : artifactId
+    # Step 1.3 : artifactId
     echo "indicate the artifactId."
     nameGen artifactId
-    # Etape 1.4 : packaging
-    choose_from_menu "Select the application type :" appType "${packaging[@]}"
+    # Step 1.4 : packaging
+    choose_from_menu "Select the application type :" appType "${packagings[@]}"
 
-    #Etape 1.5 : verification of the input(TODO)
-
-    # Etape 1.6 : package
+    #Step 1.5 : verification of the input(TODO)
+    # Step 1.6 : Template (TODO : add more template)
+    appTemplate="default"
+    # Step 1.7 : templateDir
+    templateDir="${scriptsFileDir}/../etc/template/${appType}/${appTemplate}"
+    # Step 1.8 : package
     package="${groupId}/${artifactId}"
 
+    echo "${projectRoot} ${appName} ${templateDir} ${package}"
     #Gen repo
-    gen-repos projectRoot appName package
+    gen-repos "${projectRoot}" "${templateDir}" "${appName}" "${package}" "${appType}"
 
     #Gen models
     controllersDir="${projectRoot}/${appName}/src/main/java/${package}/controller"   
@@ -46,6 +51,6 @@ function projectCraetion(){
     repositoriesDir="${projectRoot}/${appName}/src/main/java/${package}/repository"
     servicesDir="${projectRoot}/${appName}/src/main/java/${package}/service"
 
-    modelGen controllersDir modelsDir repositoriesDir servicesDir package
+    modelGen "${scriptsFileDir}" "${controllersDir}" "${modelsDir}" "${repositoriesDir}" "${servicesDir}" "${package}"
 
 }
