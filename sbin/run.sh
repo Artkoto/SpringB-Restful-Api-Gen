@@ -14,6 +14,7 @@ projectRoot="`pwd`"
 source "${scriptsFileDir}/include/add-model.sh"
 source "${scriptsFileDir}/include/create.sh"
 source "${scriptsFileDir}/include/gen-directory.sh"
+source "${scriptsFileDir}/include/parser.sh"
 source "${scriptsFileDir}/include/selectmenuFonction.sh"
 
 case $1 in
