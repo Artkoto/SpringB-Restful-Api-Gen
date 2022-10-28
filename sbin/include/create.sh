@@ -46,11 +46,11 @@ function projectCraetion(){
     gen-repos "${projectRoot}" "${templateDir}" "${appName}" "${package}" "${appType}"
 
     #Gen models
-    controllersDir="${projectRoot}/${appName}/src/main/java/${package}/controller"   
     modelsDir="${projectRoot}/${appName}/src/main/java/${package}/model"
+    controllersDir="${projectRoot}/${appName}/src/main/java/${package}/controller"   
     repositoriesDir="${projectRoot}/${appName}/src/main/java/${package}/repository"
     servicesDir="${projectRoot}/${appName}/src/main/java/${package}/service"
 
-    modelGen "${scriptsFileDir}" "${controllersDir}" "${modelsDir}" "${repositoriesDir}" "${servicesDir}" "${package}"
+    modelGen "${templateDir}" "${controllersDir}" "${modelsDir}" "${repositoriesDir}" "${servicesDir}" "${package}"
 
 }

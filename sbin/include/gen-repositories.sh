@@ -13,7 +13,7 @@ function gen-repos(){
     file-parsing "${templateDir}/mvnw" "${projectRoot}/${appName}/mvnw"
     file-parsing "${templateDir}/mvnw.cmd" "${projectRoot}/${appName}/mvnw.cmd"
     file-parsing "${templateDir}/pom.xml" "${projectRoot}/${appName}/pom.xml"
-    file-parsing "${templateDir}/docker-compose.yml" "${projectRoot}/${appName}/docker-compose.yaml"
+    file-parsing "${templateDir}/docker-compose.yml" "${projectRoot}/${appName}/docker-compose.yml"
     file-parsing "${templateDir}/Dockerfile" "${projectRoot}/${appName}/Dockerfile"
 
     #creation of the CRS folder
@@ -37,7 +37,7 @@ function gen-repos(){
 
     file-parsing "${templateDir}/src/main/java/SpringBootApplication.java" "${projectRoot}/${appName}/src/main/java/${package}/${appName^}Application.java"
 
-    file-parsing "${templateDir}/.gitignore" "${projectRoot}/${appName}/src/main/java/${package}/monitor/ControllerMonitor.java"
+    file-parsing "${templateDir}/src/main/java/monitor/ControllerMonitor.java" "${projectRoot}/${appName}/src/main/java/${package}/monitor/ControllerMonitor.java"
 
     if [ "$appType" = "war" ]
     then
