@@ -10,7 +10,7 @@ function file-parsing(){
             s/\${{artifactId}}/${artifactId,,}/gi
             s/\${{groupId}}/$(echo "${groupId,,}" | sed "s/\//./g")/gi
             s/\${{package}}/$(echo "${package,,}" | sed "s/\//./g")/gi
-            s/\${{currentYear}}/$(date +%Y)/gi
+            s/\${{yyyy}}/$(date +%Y)/gi
             " "${target}"
 }
 
