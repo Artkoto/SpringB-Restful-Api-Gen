@@ -2,19 +2,15 @@
 
 
 function gen-repos(){
-    local projectRoot="$1" templateDir="$2" appName="$3" package="$4" appType="$5"
+    local projectRoot="$1" templateDir="$2" appName="$3" package="$4"
 
     mkdir -p --verbose "${projectRoot}/${appName}" 
-    #creation of files at the project roots
-    file-parsing "${templateDir}/.gitignore" "${projectRoot}/${appName}/.gitignore"
-    file-parsing "${templateDir}/README.md" "${projectRoot}/${appName}/README.md"
-    file-parsing "${templateDir}/LICENSE" "${projectRoot}/${appName}/LICENSE"
-    file-parsing "${templateDir}/HELP.md" "${projectRoot}/${appName}/HELP.md"
-    file-parsing "${templateDir}/mvnw" "${projectRoot}/${appName}/mvnw"
-    file-parsing "${templateDir}/mvnw.cmd" "${projectRoot}/${appName}/mvnw.cmd"
-    file-parsing "${templateDir}/pom.xml" "${projectRoot}/${appName}/pom.xml"
-    file-parsing "${templateDir}/docker-compose.yml" "${projectRoot}/${appName}/docker-compose.yml"
-    file-parsing "${templateDir}/Dockerfile" "${projectRoot}/${appName}/Dockerfile"
+    #creation of files at the project roots 
+    projectRootFiles=(`find ${templateDir}/.* ${templateDir}/* -maxdepth 0 -type f -printf '%f \n'`)
+    for rootFile in "${projectRootFiles[@]}"
+    do
+        file-parsing "${templateDir}/${rootFile}" "${projectRoot}/${appName}/${rootFile}"
+    done
 
     #creation of the CRS folder
     mkdir -p --verbose "${projectRoot}/${appName}/src/main/java/${package}"
@@ -26,7 +22,11 @@ function gen-repos(){
 
     #content of main
     #resources
-    file-parsing "${templateDir}/src/main/resources/application.properties" "${projectRoot}/${appName}/src/main/resources/application.properties"
+    projectResourcesFiles=(`find ${templateDir}/src/main/resources/* -maxdepth 0 -type f -printf '%f \n'`)
+    for resourcesFile in "${projectResourcesFiles[@]}"
+    do
+        file-parsing "${templateDir}/src/main/resources/${resourcesFile}" "${projectRoot}/${appName}/src/main/resources/${resourcesFile}"
+    done
 
     #java
     mkdir -p --verbose "${projectRoot}/${appName}/src/main/java/${package}/monitor"
@@ -35,13 +35,13 @@ function gen-repos(){
     mkdir -p --verbose "${projectRoot}/${appName}/src/main/java/${package}/repository"
     mkdir -p --verbose "${projectRoot}/${appName}/src/main/java/${package}/service"
 
-    file-parsing "${templateDir}/src/main/java/SpringBootApplication.java" "${projectRoot}/${appName}/src/main/java/${package}/${appName^}Application.java"
-
     file-parsing "${templateDir}/src/main/java/monitor/ControllerMonitor.java" "${projectRoot}/${appName}/src/main/java/${package}/monitor/ControllerMonitor.java"
-
-    if [ "$appType" = "war" ]
-    then
-        file-parsing "${templateDir}/src/main/java/ServletInitializer.java" "${projectRoot}/${appName}/src/main/java/${package}/ServletInitializer.java"
-    fi
+    
+    #Main files
+    projectMainFiles=(`find ${templateDir}/src/main/java/* -maxdepth 0 -type f -printf '%f \n'`)
+    for mainFile in "${projectMainFiles[@]}"
+    do
+        file-parsing "${templateDir}/src/main/java/${mainFile}" "${projectRoot}/${appName}/src/main/java/${package}/$(echo "${mainFile}" | sed "s/AppName/${appName^}/gi")"
+    done
 
 }

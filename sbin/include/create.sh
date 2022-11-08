@@ -34,17 +34,17 @@ function projectCraetion(){
     choose_from_menu "Select the application type :" appType "${packagings[@]}"
 
     #Step 1.5 : verification of the input(TODO)
-    # Step 1.6 : Template (TODO : add more template)
-    appTemplate="default"
+    # Step 1.6 : Template 
+    templates=(`find ${scriptsFileDir}/../etc/template/${appType}/* -maxdepth 0 -type d -printf '%f \t'`)
+    choose_from_menu "Select the application template :" appTemplate "${templates[@]}"
+    #appTemplate="default"
     # Step 1.7 : templateDir
     templateDir="${scriptsFileDir}/../etc/template/${appType}/${appTemplate}"
     # Step 1.8 : package
     package="${groupId}/${artifactId}"
-
-    echo "${projectRoot} ${appName} ${templateDir} ${package}"
     #Gen repo
-    gen-repos "${projectRoot}" "${templateDir}" "${appName}" "${package}" "${appType}"
-
+    gen-repos "${projectRoot}" "${templateDir}" "${appName}" "${package}"
+   
     #Gen models
     modelsDir="${projectRoot}/${appName}/src/main/java/${package}/model"
     controllersDir="${projectRoot}/${appName}/src/main/java/${package}/controller"   

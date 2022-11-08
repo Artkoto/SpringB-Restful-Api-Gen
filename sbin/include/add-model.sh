@@ -62,17 +62,17 @@ function modelGen(){
     unset i
     for i in "${models[@]}"
     do
-    mkdir -p --verbose "${controllersDir}${modelPackages[$i]}"
-    mkdir -p --verbose "${modelsDir}${modelPackages[$i]}"
-    mkdir -p --verbose "${repositoriesDir}${modelPackages[$i]}"
-    mkdir -p --verbose "${servicesDir}${modelPackages[$i]}"
+        mkdir -p --verbose "${controllersDir}${modelPackages[$i]}"
+        mkdir -p --verbose "${modelsDir}${modelPackages[$i]}"
+        mkdir -p --verbose "${repositoriesDir}${modelPackages[$i]}"
+        mkdir -p --verbose "${servicesDir}${modelPackages[$i]}"
 
-    modelPackageName="${modelPackages[$i]}"
+        modelPackageName="${modelPackages[$i]}"
 
-    model-file-parsing "${templateDir}/src/main/java/model/$([[ ${modelParents[$i]} != "" ]] && printf "ModelExtend" || printf "Model").java" "${modelsDir}${modelPackageName}/${i^}.java" "${i}" "${package}/model${modelPackageName}" "${modelParents[$i]}"
-    model-file-parsing "${templateDir}/src/main/java/controller/Controller.java" "${controllersDir}${modelPackageName}/${i^}Controller.java" "${i}" "${package}/controller${modelPackageName}" "" 
-    model-file-parsing "${templateDir}/src/main/java/repository/Repository.java" "${repositoriesDir}${modelPackageName}/${i^}Repository.java" "${i}" "${package}/repository${modelPackageName}" "" 
-    model-file-parsing "${templateDir}/src/main/java/service/Service.java" "${servicesDir}${modelPackageName}/${i^}Service.java" "${i}" "${package}/service${modelPackageName}" "" 
+        model-file-parsing "${templateDir}/src/main/java/model/$([[ ${modelParents[$i]} != "" ]] && printf "ModelExtend" || printf "Model").java" "${modelsDir}${modelPackageName}/${i^}.java" "${i}" "${package}/model${modelPackageName}" "${modelParents[$i]}"
+        model-file-parsing "${templateDir}/src/main/java/controller/Controller.java" "${controllersDir}${modelPackageName}/${i^}Controller.java" "${i}" "${package}/controller${modelPackageName}" "" 
+        model-file-parsing "${templateDir}/src/main/java/repository/Repository.java" "${repositoriesDir}${modelPackageName}/${i^}Repository.java" "${i}" "${package}/repository${modelPackageName}" "" 
+        model-file-parsing "${templateDir}/src/main/java/service/Service.java" "${servicesDir}${modelPackageName}/${i^}Service.java" "${i}" "${package}/service${modelPackageName}" "" 
     done
     
 }
