@@ -18,7 +18,7 @@ function modelGen(){
         then  
             echo "indicate the model name."
             nameGen models[$i]
-
+            modelName="${models[i]}"
             modelPackages["${models[$i]}"]=""
             #check if models are not empty.
             if [[ ${#models[*]} -ge 2 ]]
@@ -28,8 +28,8 @@ function modelGen(){
                 do
                 case $yn in
                     Yes ) choose_from_menu "select parent :" modelParent_choice "${models[@]:0:${#models[*]}-1}" ;
-                    modelParents["${models[$i]}"]="$modelParent_choice" ;
-                    modelPackages["${models[$i]}"]=${modelPackages["$modelParent_choice"]};
+                    modelParents[$modelName]="$modelParent_choice" ;
+                    modelPackages[$modelName]=${modelPackages["$modelParent_choice"]};
                         break;;
                     No ) break;;
                 esac
@@ -43,7 +43,7 @@ function modelGen(){
                     Yes ) 
                         echo "indicate the sus package name: ";
                         directoryGen modelPackage;
-                        modelPackages["${models[$i]}"]+="/${modelPackage}";
+                        modelPackages[$modelName]+="/${modelPackage}";
                         break;;
                         
                     No ) break;;
@@ -56,23 +56,24 @@ function modelGen(){
         fi
 
     done
+    unset modelName
 
 
     #iterate on the models to generate elements
     unset i
     for i in "${models[@]}"
     do
-        mkdir -p --verbose "${controllersDir}${modelPackages[$i]}"
-        mkdir -p --verbose "${modelsDir}${modelPackages[$i]}"
-        mkdir -p --verbose "${repositoriesDir}${modelPackages[$i]}"
-        mkdir -p --verbose "${servicesDir}${modelPackages[$i]}"
-
         modelPackageName="${modelPackages[$i]}"
 
-        model-file-parsing "${templateDir}/src/main/java/model/$([[ ${modelParents[$i]} != "" ]] && printf "ModelExtend" || printf "Model").java" "${modelsDir}${modelPackageName}/${i^}.java" "${i}" "${package}/model${modelPackageName}" "${modelParents[$i]}"
-        model-file-parsing "${templateDir}/src/main/java/controller/Controller.java" "${controllersDir}${modelPackageName}/${i^}Controller.java" "${i}" "${package}/controller${modelPackageName}" "" 
-        model-file-parsing "${templateDir}/src/main/java/repository/Repository.java" "${repositoriesDir}${modelPackageName}/${i^}Repository.java" "${i}" "${package}/repository${modelPackageName}" "" 
-        model-file-parsing "${templateDir}/src/main/java/service/Service.java" "${servicesDir}${modelPackageName}/${i^}Service.java" "${i}" "${package}/service${modelPackageName}" "" 
+        mkdir -p --verbose "${controllersDir}${modelPackageName}"
+        mkdir -p --verbose "${modelsDir}${modelPackageName}"
+        mkdir -p --verbose "${repositoriesDir}${modelPackageName}"
+        mkdir -p --verbose "${servicesDir}${modelPackageName}"
+
+        model-file-parsing "${templateDir}/src/main/java/model/$([[ ${modelParents[$i]} != "" ]] && printf "ModelExtend" || printf "Model").java" "${modelsDir}${modelPackageName}/${i^}.java" "${i}" "${modelPackageName}" "${modelParents[$i]}"
+        model-file-parsing "${templateDir}/src/main/java/controller/Controller.java" "${controllersDir}${modelPackageName}/${i^}Controller.java" "${i}" "${modelPackageName}" "" 
+        model-file-parsing "${templateDir}/src/main/java/repository/Repository.java" "${repositoriesDir}${modelPackageName}/${i^}Repository.java" "${i}" "${modelPackageName}" "" 
+        model-file-parsing "${templateDir}/src/main/java/service/Service.java" "${servicesDir}${modelPackageName}/${i^}Service.java" "${i}" "${modelPackageName}" "" 
     done
     
 }

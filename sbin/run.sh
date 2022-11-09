@@ -8,7 +8,7 @@ YesOrNo=(
 
 # racine du projet
 scriptsFileDir="`dirname $0`"
-projectRoot="`pwd`"
+workSpaceDir="`pwd`"
 
 #incldes
 source "${scriptsFileDir}/include/add-model.sh"
@@ -18,8 +18,8 @@ source "${scriptsFileDir}/include/parser.sh"
 source "${scriptsFileDir}/include/selectmenuFonction.sh"
 
 case $1 in
-    "create" ) projectCraetion "$scriptsFileDir" "$projectRoot";;
-    "add-model" ) modelGenBis "$scriptsFileDir" "$projectRoot";;
+    "create" ) projectCraetion "$scriptsFileDir" "$workSpaceDir";;
+    "add-model" ) modelGenBis "$scriptsFileDir" "$workSpaceDir";;
     * ) echo "Command $1 not found" ;;
     #todo : add command "help" for next time
 esac

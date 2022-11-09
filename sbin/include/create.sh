@@ -13,7 +13,7 @@ packagings=(
 
 #projject creation function
 function projectCraetion(){
-    local scriptsFileDir="$1" projectRoot="$2"
+    local scriptsFileDir="$1" workSpaceDir="$2"
     local appName="" groupId="" artifactId="" package="" appType=""
     local appTemplate="" templateDir=""
 
@@ -43,13 +43,13 @@ function projectCraetion(){
     # Step 1.8 : package
     package="${groupId}/${artifactId}"
     #Gen repo
-    gen-repos "${projectRoot}" "${templateDir}" "${appName}" "${package}"
+    gen-repos "${workSpaceDir}" "${templateDir}" "${appName}" "${package}"
    
     #Gen models
-    modelsDir="${projectRoot}/${appName}/src/main/java/${package}/model"
-    controllersDir="${projectRoot}/${appName}/src/main/java/${package}/controller"   
-    repositoriesDir="${projectRoot}/${appName}/src/main/java/${package}/repository"
-    servicesDir="${projectRoot}/${appName}/src/main/java/${package}/service"
+    modelsDir="${workSpaceDir}/${appName}/src/main/java/${package}/model"
+    controllersDir="${workSpaceDir}/${appName}/src/main/java/${package}/controller"   
+    repositoriesDir="${workSpaceDir}/${appName}/src/main/java/${package}/repository"
+    servicesDir="${workSpaceDir}/${appName}/src/main/java/${package}/service"
 
     modelGen "${templateDir}" "${controllersDir}" "${modelsDir}" "${repositoriesDir}" "${servicesDir}" "${package}"
 
