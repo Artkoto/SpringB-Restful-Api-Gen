@@ -31,7 +31,8 @@ function projectCraetion(){
     echo "indicate the artifactId."
     nameGen artifactId
     # Step 1.4 : packaging
-    choose_from_menu "Select the application type :" appType "${packagings[@]}"
+    #choose_from_menu "Select the application type :" appType "${packagings[@]}"
+    appType="jar"
 
     #Step 1.5 : verification of the input(TODO)
     # Step 1.6 : Template 
