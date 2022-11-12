@@ -113,8 +113,6 @@ function modelGenAux(){
     currentModels=(`find * -type f -wholename "src/*model/*.java" | sed -nre 's/^.*\/(\w+)\.java/\1/p'`)
 
     #models packages
-    #sed -nre 's/^.*(package)\s*((\w+)(.\w+)*)+\s*;/\2/p' file (modelpackage)
-     #faire traitement sur les apckages . en /  et enlever le package principale {s/\./\//g; s/${package}//g; }
     for i in "${currentModels[@]}"
     do
         modelPackages[$i]="`sed -nre 's/^.*(package)\s*(.*.model)((.\w+)*)\s*;/\3/p' "$(find * -type f -wholename "src/main/java/*/model*/${i}.java")" | sed "s/\./\//g"`"
