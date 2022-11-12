@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# app type
-packagings=(
-    "jar"
-    "war"
-    )
-
 #inputs modification
 # inputsEdit={
 
@@ -14,11 +8,10 @@ packagings=(
 #projject creation function
 function projectCraetion(){
     local scriptsFileDir="$1" workSpaceDir="$2"
-    local appName="" groupId="" artifactId="" package="" appType=""
+    local appName="" groupId="" artifactId="" appType=""
     local appTemplate="" templateDir=""
 
     source "${scriptsFileDir}/include/gen-repositories.sh"
-    source "${scriptsFileDir}/include/gen-name.sh"
 
     # Step 1 : general information about the application
     #Step 1.1 : App name
@@ -52,6 +45,6 @@ function projectCraetion(){
     repositoriesDir="${workSpaceDir}/${appName}/src/main/java/${package}/repository"
     servicesDir="${workSpaceDir}/${appName}/src/main/java/${package}/service"
 
-    modelGen "${templateDir}" "${controllersDir}" "${modelsDir}" "${repositoriesDir}" "${servicesDir}" "${package}"
+    modelGen "${templateDir}" "${controllersDir}" "${modelsDir}" "${repositoriesDir}" "${servicesDir}"
 
 }
